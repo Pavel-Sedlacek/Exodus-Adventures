@@ -1,10 +1,11 @@
 package org.knism.exodus.core
 
+import org.knism.exodus.core.annotations.Warning
+
 open class GameSettings {
 
-    val level = 0
-    val vision = 1
-
+    @Warning("nemeni to, nebo prepis celej Map.move()")
+    val regionEdgeSize = 3
 
     companion object: GameSettings()
 }

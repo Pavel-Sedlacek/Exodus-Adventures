@@ -1,5 +1,6 @@
 package org.knism.exodus.konsole
 
+import com.varabyte.konsole.foundation.input.onInputEntered
 import com.varabyte.konsole.foundation.konsoleApp
 import com.varabyte.konsole.foundation.runUntilSignal
 import com.varabyte.konsole.foundation.text.textLine
@@ -16,6 +17,8 @@ open class Konsole private constructor() : Thread() {
         l?.requestRerender()
     }
 
+    var onInput: ((input: String) -> Unit)? = null
+
     override fun run() {
         konsoleApp {
             konsole {
@@ -23,6 +26,7 @@ open class Konsole private constructor() : Thread() {
             }.also { l = it }.runUntilSignal {
                 signal = { signal() }
                 waitForSignal()
+                onInputEntered { onInput?.invoke(input) }
             }
         }
     }

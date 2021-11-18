@@ -1,4 +1,6 @@
-package org.knism.exodus.core.map
+package org.knism.exodus.core.map.tile
+
+import org.knism.exodus.core.map.region.RegionTypes
 
 enum class TileType(private val region: RegionTypes) {
     Square(RegionTypes.City),

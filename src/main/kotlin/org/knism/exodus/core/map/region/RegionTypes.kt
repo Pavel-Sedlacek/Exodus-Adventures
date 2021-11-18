@@ -1,4 +1,4 @@
-package org.knism.exodus.core.map
+package org.knism.exodus.core.map.region
 
 enum class RegionTypes {
     Ocean,
