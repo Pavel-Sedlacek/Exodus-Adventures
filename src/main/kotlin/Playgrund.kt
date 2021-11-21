@@ -1,24 +1,25 @@
-import org.knism.exodus.core.entities.player.Inventory
-import org.knism.exodus.core.entities.player.Player
-import org.knism.exodus.core.entities.stats.*
-import org.knism.exodus.core.items.weapons.Hands
+import com.varabyte.konsole.foundation.input.Completions
+import com.varabyte.konsole.foundation.input.input
+import com.varabyte.konsole.foundation.input.onInputEntered
+import com.varabyte.konsole.foundation.input.runUntilInputEntered
+import com.varabyte.konsole.foundation.text.text
+import com.varabyte.konsole.foundation.text.textLine
 import org.knism.exodus.konsole.Konsole
-import org.knism.exodus.konsole.interactions.selectInput
+import org.knism.exodus.konsole.animations.Animation
+import org.knism.exodus.konsole.animations.animate
+import org.knism.exodus.konsole.interactions.select
 import org.knism.exodus.konsole.interactions.yesOrNo
+import org.knism.exodus.konsole.time.millis
+import org.knism.exodus.predicates.AnimationPredicate
 
 fun main() {
-    Konsole.start()
-    val exodus =
-        Player(
-            "",
-            PlayerStats(
-                Level(0, 0, 30, LevelRequirementsScaling(20)),
-                Health(0, 100),
-                Armor(0, 100),
-                Mana(0, 20)),
-            Inventory(),
-            Hands())
 
-//    println(Konsole.yesOrNo("bruh?"))
-    println(Konsole.selectInput("choose wisely", listOf("wisely", "poorly", "bruh")))
+    Konsole.start()
+    
+    Konsole.select("choose wisely", listOf("idiot", "wisely", "potato", "b")).log()
+
+}
+
+fun Any?.log() {
+    println(this)
 }

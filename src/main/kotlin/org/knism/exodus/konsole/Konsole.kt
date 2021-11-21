@@ -1,54 +1,30 @@
 package org.knism.exodus.konsole
 
-import com.varabyte.konsole.foundation.input.onInputEntered
 import com.varabyte.konsole.foundation.konsoleApp
-import com.varabyte.konsole.foundation.runUntilSignal
-import com.varabyte.konsole.foundation.text.textLine
-import com.varabyte.konsole.runtime.KonsoleBlock
-import com.varabyte.konsole.runtime.render.RenderScope
-import kotlin.properties.Delegates
+import com.varabyte.konsole.foundation.text.text
+import com.varabyte.konsole.runtime.KonsoleApp
 
 
 open class Konsole private constructor() : Thread() {
 
-    private var signal: () -> Unit = {}
-    private var l: KonsoleBlock? = null
-    private var block: (RenderScope).() -> Unit by Delegates.observable({ textLine("bruh") }) { _, _, _ ->
-        l?.requestRerender()
+    private var appBlock: (KonsoleApp).() -> Unit = {
+        this.konsole {
+            text("Starting konsole")
+        }.run()
     }
 
-    var onInput: ((input: String) -> Unit)? = null
-
     override fun run() {
-        konsoleApp {
-
-            konsole {
-                block()
-            }.also { l = it }.runUntilSignal {
-                signal = { signal() }
-                onInputEntered { onInput?.invoke(input) }
-                waitForSignal()
-            }
+        konsoleApp() {
+            appBlock()
         }
     }
 
-    fun append(block: RenderScope.() -> Unit) {
-        val x = this.block
-        this.block = {
+    fun append(block: KonsoleApp.() -> Unit) {
+        val x = this.appBlock
+        this.appBlock = {
             x()
             block()
         }
-    }
-
-    fun rerender() = this.l?.requestRerender()
-    fun close() = signal()
-    fun create(init: Konsole.() -> Unit) = this.init()
-    fun clear() {
-        this.block = {}
-    }
-
-    fun clearAfterInput() {
-        TODO("Not yet implemented")
     }
 
     companion object : Konsole()
