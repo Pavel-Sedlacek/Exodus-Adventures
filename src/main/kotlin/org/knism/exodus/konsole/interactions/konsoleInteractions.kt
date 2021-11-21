@@ -7,14 +7,35 @@ import com.varabyte.konsole.foundation.text.textLine
 import org.knism.exodus.konsole.Konsole
 
 fun Konsole.yesOrNo(question: String): YesNo {
-    var x = false
+    var response: Boolean? = null
     append {
         onInput = { input ->
-            println("")
-            x = "yes".startsWith(input.lowercase())
+            response = "yes".startsWith(input.lowercase())
         }
         textLine(question)
         text("> "); input(Completions("yes", "no"))
     }
-    return if (x) YesNo.YES else YesNo.NO
+
+    while (response == null) {Thread.sleep(50)}
+    return if (response!!) YesNo.YES else YesNo.NO
 }
+
+fun Konsole.selectInput(question: String, options: List<String>): String {
+    var response: String? = null
+    onInput = { input ->
+        println("stan se zmrde")
+        response = input
+    }
+    append {
+        textLine(question)
+        textLine(options.joinToString(", ", "[", "]"))
+        text("> "); input(Completions(*options.toTypedArray()))
+    }
+
+    clearAfterInput()
+
+    // TODO fix return wait for response
+    while (response == null) {Thread.sleep(50)}
+    return response!!
+}
+

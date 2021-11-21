@@ -1,3 +1,3 @@
 package org.knism.exodus.core.entities.stats
 
-class PlayerStats(health: Health, armor: Armor, val mana: Mana) : EntityStats(health, armor)
+class PlayerStats(level: Level, health: Health, armor: Armor, val mana: Mana) : EntityStats(level, health, armor)

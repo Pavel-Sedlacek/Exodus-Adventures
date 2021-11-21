@@ -21,12 +21,13 @@ open class Konsole private constructor() : Thread() {
 
     override fun run() {
         konsoleApp {
+
             konsole {
                 block()
             }.also { l = it }.runUntilSignal {
                 signal = { signal() }
-                waitForSignal()
                 onInputEntered { onInput?.invoke(input) }
+                waitForSignal()
             }
         }
     }
@@ -44,6 +45,10 @@ open class Konsole private constructor() : Thread() {
     fun create(init: Konsole.() -> Unit) = this.init()
     fun clear() {
         this.block = {}
+    }
+
+    fun clearAfterInput() {
+        TODO("Not yet implemented")
     }
 
     companion object : Konsole()
