@@ -1,4 +1,4 @@
-package org.knism.exodus.konsole.time
+package org.knism.exodus.time
 
 import java.time.Duration
 import kotlin.concurrent.thread

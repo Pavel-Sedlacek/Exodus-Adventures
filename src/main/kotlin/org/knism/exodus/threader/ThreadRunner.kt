@@ -1,4 +1,4 @@
-package org.knism.exodus.konsole.threader
+package org.knism.exodus.threader
 
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
