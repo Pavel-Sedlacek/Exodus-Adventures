@@ -3,8 +3,9 @@ package org.knism.exodus.core.map
 import org.knism.exodus.core.PlayerGlobal
 import org.knism.exodus.core.generators.sequence.IntGenerator
 import org.knism.exodus.core.map.region.Region
+import org.knism.exodus.saves.WorldMapFile
 
-class Map private constructor() {
+class WorldMap private constructor() {
     val map = mutableMapOf<Coordinate, Region>()
     private var idGenerator = IntGenerator(false)
 
@@ -80,8 +81,8 @@ class Map private constructor() {
     }
 
     companion object {
-        fun newMap(): Map {
-            val x = Map()
+        fun default(): WorldMap {
+            val x = WorldMap()
             x.revealAround(Position(0, 0, -1))
             with(x.virtualPlayer) {
                 regionX = 0
@@ -89,6 +90,10 @@ class Map private constructor() {
                 tileId = 5
             }
             return x
+        }
+
+        fun loadFromSave(worldMap: WorldMapFile): WorldMap {
+            TODO()
         }
     }
 }

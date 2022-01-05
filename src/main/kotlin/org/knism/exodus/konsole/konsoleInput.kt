@@ -20,7 +20,7 @@ fun RenderScope.get(completions: Completions? = null) {
     text("> "); input(completions)
 }
 
-fun KonsoleApp.readInt(message: String): String {
+fun KonsoleApp.readInt(message: String): Int {
     var x = ""
     konsole { textLine(message); get() }.runUntilSignal {
         onInputEntered {
@@ -29,12 +29,12 @@ fun KonsoleApp.readInt(message: String): String {
         }
         waitForSignal()
     }
-    return x
+    return x.toInt()
 }
 
 fun KonsoleApp.readOption(message: String, options: List<String>): String {
     var x = ""
-    konsole { text(message); get(Completions(*(options.toTypedArray()))) }.runUntilSignal {
+    konsole { textLine(message); get(Completions(*(options.toTypedArray()))) }.runUntilSignal {
         onInputEntered {
             x = input
             if (options.contains(input)) signal()
@@ -42,4 +42,10 @@ fun KonsoleApp.readOption(message: String, options: List<String>): String {
         waitForSignal()
     }
     return x
+}
+
+fun KonsoleApp.anyKey() {
+    konsole {
+        text("Press any key to continue..."); get()
+    }.runUntilInputEntered()
 }
